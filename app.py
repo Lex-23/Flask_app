@@ -54,6 +54,18 @@ def post_detail(id):
     return render_template('post_detail.html', article=article)
 
 
+@app.route('/posts/<int:id>/delete')
+def post_delete(id):
+    article = Article.query.get_or_404(id)
+
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        return redirect('/posts')
+    except:
+        return "Error while deleting the article"
+
+
 @app.route('/create-article', methods=['POST', 'GET'])
 def create_article():
     if request.method == 'POST':
@@ -68,9 +80,27 @@ def create_article():
             db.session.commit()
             return redirect('/posts')
         except:
-            return "You have a miss"
+            return "You have a miss while creating article"
     else:
         return render_template('create-article.html')
+
+
+@app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+def post_update(id):
+    article = Article.query.get(id)
+    if request.method == 'POST':
+        article.title = request.form['title']
+        article.intro = request.form['intro']
+        article.text = request.form['text']
+
+        try:
+            db.session.commit()
+            return redirect('/posts')
+        except:
+            return "You have a miss while updating article"
+    else:
+
+        return render_template('update-article.html', article=article)
 
 
 if __name__ == '__main__':

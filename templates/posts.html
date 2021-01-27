@@ -8,13 +8,18 @@ All posts
     <div class="container">
         <h1>All your posts</h1>
 
-        {% for el in articles %}
-        <div class="alert alert-info">
-            <h2>{{ el.title }}</h2>
-            <p>{{ el.intro }}</p>
-            <p><b>Date: {{ el.date.date() }}</b></p>
-            <a href="/posts/{{ el.id }}" class="btn btn-warning">more details</a>
-        </div>
-        {% endfor %}
+        {% if articles|length > 0 %}
+
+            {% for el in articles %}
+            <div class="alert alert-info">
+                <h2>{{ el.title }}</h2>
+                <p>{{ el.intro }}</p>
+                <p><b>Date: {{ el.date.date() }}</b></p>
+                <a href="/posts/{{ el.id }}" class="btn btn-warning">more details</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>We haven't any articles yet</p>
+        {% endif %}
     </div>
 {% endblock %}
