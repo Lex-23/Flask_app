@@ -14,50 +14,61 @@
 <body>
 
     <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-      <p style="margin-right: 230px" class="h4 my-0 me-md-auto fw-normal">Flask project</p>
+      <p style="margin-right: 230px" class="h4 my-0 me-md-auto fw-normal">Simple BLOG</p>
       <nav class="my-2 my-md-0 me-md-3">
-        <a class="p-3 text-dark" href="/home">Main Page</a>
-        <a class="p-3 text-dark" href="/about">About us</a>
-        <a class="p-3 text-dark" href="/posts">Posts</a>
-        <a style="margin-left: 30px" class="btn btn-warning" href="/create-article">Create</a>
+        <a class="p-3 text-dark" href="{{ url_for('main.index') }}">Main Page</a>
+        <a class="p-3 text-dark" href="{{ url_for('main.about') }}" >About us</a>
+        <a class="p-3 text-dark" href="{{ url_for('blog.posts') }}">Posts</a>
+          {% if current_user.is_authenticated %}
+          <a class="p-3 text-dark" href="{{ url_for('main.profile') }}">
+              Profile
+          </a>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+          <a style="margin-left: 90px" class="btn btn-warning" href="{{ url_for('blog.create_article') }}">
+              Create new article
+          </a>
+          {% endif %}
+          {% if not current_user.is_authenticated %}
+          <a style="margin-left: 350px" class="p-3 text-blue" href="{{ url_for('auth.login') }}">
+              Login
+          </a>
+          <a class="p-3 text-blue" href="{{ url_for('auth.signup') }}">
+              Sign Up
+          </a>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+          <a style="margin-left: 150px" href="{{ url_for('auth.logout') }}" class="p-3 text-blue">
+              Logout
+          </a>
+          {% endif %}
       </nav>
-      <a style="margin-left: 370px" class="btn btn-outline-primary" href="#">Sign up</a>
     </header>
 
-    {% block body %}{% endblock %}
 
+    {% block body %}{% endblock %}
+    <br>
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
           <div class="col-9 col-md">
-            <small class="d-block mb-5 text-muted">© 2021</small>
+            <small style="margin-left: 50px" class="d-block mb-5 text-muted">© 2021</small>
           </div>
           <div class="col-6 col-md">
             <h5>Features</h5>
             <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="#">Cool stuff</a></li>
-              <li><a class="link-secondary" href="#">Random feature</a></li>
-              <li><a class="link-secondary" href="#">Team feature</a></li>
-              <li><a class="link-secondary" href="#">Stuff for developers</a></li>
-              <li><a class="link-secondary" href="#">Another one</a></li>
-              <li><a class="link-secondary" href="#">Last time</a></li>
+
             </ul>
           </div>
           <div class="col-6 col-md">
             <h5>Resources</h5>
             <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="#">Resource</a></li>
-              <li><a class="link-secondary" href="#">Resource name</a></li>
-              <li><a class="link-secondary" href="#">Another resource</a></li>
-              <li><a class="link-secondary" href="#">Final resource</a></li>
+
             </ul>
           </div>
           <div class="col-6 col-md">
             <h5>About</h5>
             <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="#">Team</a></li>
-              <li><a class="link-secondary" href="#">Locations</a></li>
-              <li><a class="link-secondary" href="#">Privacy</a></li>
-              <li><a class="link-secondary" href="#">Terms</a></li>
+
             </ul>
           </div>
         </div>

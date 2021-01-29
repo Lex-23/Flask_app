@@ -5,8 +5,13 @@ All posts
 {% endblock %}
 
 {% block body %}
+{% if current_user.is_authenticated %}
+<div class="container">
+    <p style="color: blue">{{ current_user.name }} online</p>
+</div>
+{% endif %}
     <div class="container">
-        <h1>All your posts</h1>
+        <p style="font-size: 26px;">All your posts here</p>
 
         {% if articles|length > 0 %}
 
@@ -14,12 +19,13 @@ All posts
             <div class="alert alert-info">
                 <h2>{{ el.title }}</h2>
                 <p>{{ el.intro }}</p>
+                <p style="font-size: 12px;">{{ el.author }}</p>
                 <p><b>Date: {{ el.date.date() }}</b></p>
                 <a href="/posts/{{ el.id }}" class="btn btn-warning">more details</a>
             </div>
             {% endfor %}
         {% else %}
-            <p>We haven't any articles yet</p>
+            <p style="font-size: 16px;">We haven't any articles yet</p>
         {% endif %}
     </div>
 {% endblock %}
